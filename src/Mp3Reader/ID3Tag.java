@@ -10,7 +10,7 @@ public class ID3Tag
 	private String album;
 	private String year;
 	private String comment;
-	private String genre;
+	private Genre genre;
 
 	private ID3Tag()
 	{
@@ -34,13 +34,13 @@ public class ID3Tag
 		byte[] baAlbum = readXBytes(last128, 63, 93);
 		byte[] baYear = readXBytes(last128, 93, 97);
 		byte[] baComment = readXBytes(last128, 97, 127);
-		byte[] baGenre = readXBytes(last128, 127, 128);
+		byte baGenre = last128[127];
 		String title = new String(baTitle);
 		String artist = new String(baArtist);
 		String album = new String(baAlbum);
 		String year = new String(baYear);
 		String comment = new String(baComment);
-		String genre = new String(baGenre);
+		Genre genre = Genre.getGenreByByteId(baGenre);
 		ID3Tag tag = new ID3Tag();
 		tag.setTitle(title);
 		tag.setArtist(artist);
@@ -122,12 +122,12 @@ public class ID3Tag
 		this.comment = comment;
 	}
 
-	public String getGenre()
+	public Genre getGenre()
 	{
 		return genre;
 	}
 
-	public void setGenre(String genre)
+	public void setGenre(Genre genre)
 	{
 		this.genre = genre;
 	}

@@ -25,7 +25,7 @@ public class MusicIDTag {
 			id3Tag = tag.getComment();
 			break;
 		case "genre":
-			id3Tag = tag.getGenre();
+			id3Tag = tag.getGenre().toString();
 			break;
 		default:
 			System.out.println("Wrong property!");
