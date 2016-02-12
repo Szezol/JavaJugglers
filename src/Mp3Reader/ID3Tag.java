@@ -42,11 +42,11 @@ public class ID3Tag
 		String comment = new String(baComment);
 		Genre genre = Genre.getGenreByByteId(baGenre);
 		ID3Tag tag = new ID3Tag();
-		tag.setTitle(title);
-		tag.setArtist(artist);
-		tag.setAlbum(album);
+		tag.setTitle(title.toLowerCase());
+		tag.setArtist(artist.toLowerCase());
+		tag.setAlbum(album.toLowerCase());
 		tag.setYear(year);
-		tag.setComment(comment);
+		tag.setComment(comment.toLowerCase());
 		tag.setGenre(genre);
 		return tag;
 	}
