@@ -1,4 +1,4 @@
-package Mp3Reader;
+package mp3Reader;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -42,11 +42,11 @@ public class ID3Tag
 		String comment = new String(baComment);
 		Genre genre = Genre.getGenreByByteId(baGenre);
 		ID3Tag tag = new ID3Tag();
-		tag.setTitle(title);
-		tag.setArtist(artist);
-		tag.setAlbum(album);
+		tag.setTitle(title.toLowerCase());
+		tag.setArtist(artist.toLowerCase());
+		tag.setAlbum(album.toLowerCase());
 		tag.setYear(year);
-		tag.setComment(comment);
+		tag.setComment(comment.toLowerCase());
 		tag.setGenre(genre);
 		return tag;
 	}
@@ -124,6 +124,10 @@ public class ID3Tag
 
 	public Genre getGenre()
 	{
+		if (genre == null)
+		{
+			return Genre.Other;
+		}
 		return genre;
 	}
 
@@ -131,15 +135,4 @@ public class ID3Tag
 	{
 		this.genre = genre;
 	}
-
-//	public static void main(String[] args)
-//	{
-//		ID3Tag tag = ID3Tag.parse(new File("C:\\mp3\\zene1.mp3"));
-//		System.out.println(tag.getTitle());
-//		System.out.println(tag.getAlbum());
-//		System.out.println(tag.getArtist());
-//		System.out.println(tag.getYear());
-//		System.out.println(tag.getGenre());
-//		System.out.println(tag.getComment());
-//	}
 }

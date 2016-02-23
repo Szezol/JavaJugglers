@@ -1,4 +1,4 @@
-package Mp3Reader;
+package mp3Reader;
 
 public class NotDirectoryException extends Exception
 {
