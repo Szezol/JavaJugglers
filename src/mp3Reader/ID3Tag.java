@@ -3,8 +3,7 @@ package mp3Reader;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-public class ID3Tag
-{
+public class ID3Tag {
 	private String title;
 	private String artist;
 	private String album;
@@ -12,22 +11,18 @@ public class ID3Tag
 	private String comment;
 	private Genre genre;
 
-	private ID3Tag()
-	{
+	private ID3Tag() {
 	}
 
-	private static byte[] readXBytes(byte[] byteArray, int fromPos, int toPos)
-	{
+	private static byte[] readXBytes(byte[] byteArray, int fromPos, int toPos) {
 		byte[] resultArray = new byte[toPos - fromPos];
-		for (int i = fromPos; i < toPos; i++)
-		{
+		for (int i = fromPos; i < toPos; i++) {
 			resultArray[i - fromPos] = byteArray[i];
 		}
 		return resultArray;
 	}
 
-	public static ID3Tag parse(File file)
-	{
+	public static ID3Tag parse(File file) {
 		byte[] last128 = tail(file);
 		byte[] baTitle = readXBytes(last128, 3, 33);
 		byte[] baArtist = readXBytes(last128, 33, 63);
@@ -51,84 +46,73 @@ public class ID3Tag
 		return tag;
 	}
 
-	public static byte[] tail(File file)
-	{
-		try
-		{
+	public static byte[] tail(File file) {
+		try {
 			RandomAccessFile fileHandler = new RandomAccessFile(file, "r");
 			long fileLength = fileHandler.length() - 1;
 			byte[] buffer = new byte[128];
-			for (int i = 0; i < buffer.length; i++)
-			{
+			for (int i = 0; i < buffer.length; i++) {
 				fileHandler.seek(fileLength - 127 + i);
 				buffer[i] = fileHandler.readByte();
 			}
 			fileHandler.close();
 			return buffer;
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getArtist()
-	{
+	public String getArtist() {
 		return artist;
 	}
 
-	public void setArtist(String artist)
-	{
+	public void setArtist(String artist) {
 		this.artist = artist;
 	}
 
-	public String getAlbum()
-	{
+	public String getAlbum() {
 		return album;
 	}
 
-	public void setAlbum(String album)
-	{
+	public void setAlbum(String album) {
 		this.album = album;
 	}
 
-	public String getYear()
-	{
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(String year)
-	{
+	public void setYear(String year) {
 		this.year = year;
 	}
 
-	public String getComment()
-	{
+	public String getComment() {
 		return comment;
 	}
 
-	public void setComment(String comment)
-	{
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	public Genre getGenre()
-	{
+	public Genre getGenre() {
 		return genre;
 	}
 
-	public void setGenre(Genre genre)
-	{
+	@Override
+	public String toString() {
+		return title + artist + album + year + comment + genre;
+	}
+
+	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
 
