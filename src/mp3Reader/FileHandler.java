@@ -26,18 +26,17 @@ public class FileHandler implements IMP3FileArranger
 			OutputStream os = socket.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			int i;
-			while ((i = ois.read()) > -1)
+			while (true)
 			{
-				try
+				if ((i = ois.read()) > -1)
 				{
-					Object object = ois.readObject();
-					if (object instanceof Id3PropertyTags)
+					try
 					{
-						int j;
-						while ((j = ois.read()) > -1)
+						Object object = ois.readObject();
+						if (object instanceof Id3PropertyTags)
 						{
 							Object object2 = ois.readObject();
-							if (object2 instanceof HashMap<?, ?>)
+							if (object2 instanceof HashMap)
 							{
 								FileHandler filehandler = new FileHandler();
 								HashMap<String, List<File>> returnList = new HashMap<>();
@@ -45,18 +44,15 @@ public class FileHandler implements IMP3FileArranger
 										(Id3PropertyTags) object);
 								oos.writeObject(returnList);
 							}
-							break;
 						}
+
+					} catch (ClassNotFoundException e)
+					{
+						e.printStackTrace();
 					}
-				} catch (ClassNotFoundException e)
-				{
-					e.printStackTrace();
 				}
 
 			}
-			oos.close();
-			os.close();
-			ois.close();
 
 		} catch (IOException e)
 		{

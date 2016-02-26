@@ -12,7 +12,8 @@ import java.util.HashMap;
 import mp3Reader.ID3Tag;
 import mp3Reader.Id3PropertyTags;
 
-public class Client {
+public class Client
+{
 
 	static String host;
 	static int port;
@@ -20,24 +21,29 @@ public class Client {
 	static ObjectOutputStream oos;
 	static ObjectInputStream ois;
 
-	public static void send(ObjectOutputStream oos, Object object) throws IOException {
+	public static void send(ObjectOutputStream oos, Object object) throws IOException
+	{
 		oos.write(0);
 		oos.writeObject(object);
 	}
 
-	public static void setHostAndPort(String string, int i) {
+	public static void setHostAndPort(String string, int i)
+	{
 		Client.host = string;
 		Client.port = i;
-		try {
+		try
+		{
 			Client.socket = new Socket(host, port);
 			Client.oos = new ObjectOutputStream(socket.getOutputStream());
 			Client.ois = new ObjectInputStream(socket.getInputStream());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
 
-	static class CategoryHelper implements Serializable {
+	static class CategoryHelper implements Serializable
+	{
 		/**
 		 * 
 		 */
@@ -45,30 +51,36 @@ public class Client {
 		HashMap<File, ID3Tag> filesWithTags;
 		Id3PropertyTags id3tag;
 
-		public CategoryHelper(HashMap<File, ID3Tag> filesWithTags, Id3PropertyTags id3tag) {
+		public CategoryHelper(HashMap<File, ID3Tag> filesWithTags, Id3PropertyTags id3tag)
+		{
 			this.filesWithTags = filesWithTags;
 			this.id3tag = id3tag;
 		}
 
-		public HashMap<File, ID3Tag> getFilesWithTags() {
+		public HashMap<File, ID3Tag> getFilesWithTags()
+		{
 			return filesWithTags;
 		}
 
-		public void setFilesWithTags(HashMap<File, ID3Tag> filesWithTags) {
+		public void setFilesWithTags(HashMap<File, ID3Tag> filesWithTags)
+		{
 			this.filesWithTags = filesWithTags;
 		}
 
-		public Id3PropertyTags getId3tag() {
+		public Id3PropertyTags getId3tag()
+		{
 			return id3tag;
 		}
 
-		public void setId3tag(Id3PropertyTags id3tag) {
+		public void setId3tag(Id3PropertyTags id3tag)
+		{
 			this.id3tag = id3tag;
 		}
 
 	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	public static void main(String[] args) throws UnknownHostException, IOException
+	{
 
 		String javatatlanKezekHost = "192.168.0.1";
 		int javatatlanKezekPort = 1234;
@@ -76,19 +88,22 @@ public class Client {
 		Commands command = Commands.CATEGORYBYTAG;
 		// Object objectToSend = CategoryHelper.vmi();
 
-		if (command.equals(Commands.CATEGORYBYTAG)) {
+		if (command.equals(Commands.CATEGORYBYTAG))
+		{
 			Client.setHostAndPort("localhost", 1234);
 			HashMap<File, ID3Tag> categoryPathAndTag = new HashMap<>();
-			File mp3 = new File("C:\\mp3\\Robin Schulz - Sugar (Radio Edit).mp3");
+			File mp3 = new File("C:\\workspace\\zene");
 			categoryPathAndTag.put(mp3, ID3Tag.parse(mp3));
 			CategoryHelper categoryObject = new CategoryHelper(categoryPathAndTag, Id3PropertyTags.TITLE);
 			send(oos, categoryObject);
 		}
-		if (command.equals(Commands.SPLITMP3)) {
+		if (command.equals(Commands.SPLITMP3))
+		{
 			Client.setHostAndPort(javatatlanKezekHost, javatatlanKezekPort);
 			// send(oos, objectToSend);
 		}
-		if (command.equals(Commands.SORTBYTAG)) {
+		if (command.equals(Commands.SORTBYTAG))
+		{
 			Client.setHostAndPort(javatatlanKezekHost, javatatlanKezekPort);
 			// send(oos, objectToSend);
 		}
