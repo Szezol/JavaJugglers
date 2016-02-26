@@ -2,8 +2,13 @@ package mp3Reader;
 
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 
-public class ID3Tag {
+public class ID3Tag implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4336227151410315243L;
 	private String title;
 	private String artist;
 	private String album;
@@ -107,10 +112,10 @@ public class ID3Tag {
 		return genre;
 	}
 
-	@Override
-	public String toString() {
-		return title + artist + album + year + comment + genre;
-	}
+	// @Override
+	// public String toString() {
+	// return title + artist + album + year + comment + genre;
+	// }
 
 	public void setGenre(Genre genre) {
 		this.genre = genre;

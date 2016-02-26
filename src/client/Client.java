@@ -1,4 +1,4 @@
-package mp3Reader;
+package client;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+
+import mp3Reader.ID3Tag;
+import mp3Reader.Id3PropertyTags;
 
 public class Client {
 
